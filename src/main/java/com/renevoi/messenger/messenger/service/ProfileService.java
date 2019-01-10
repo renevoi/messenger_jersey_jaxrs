@@ -1,0 +1,46 @@
+package com.renevoi.messenger.messenger.service;
+
+import com.renevoi.messenger.messenger.database.DatabaseClass;
+import com.renevoi.messenger.messenger.model.Profile;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class ProfileService {
+
+    private Map<String, Profile> profiles = DatabaseClass.getProfiles();
+
+    public ProfileService() {
+        profiles.put("Renevoi", new Profile(1, "Renevoi", "Rene", "Catapang"));
+        profiles.put("Ailia", new Profile(2, "Ailia", "Ailia Cerene", "Catapang"));
+    }
+
+    public List<Profile> getAllProfile(){
+
+        return new ArrayList<>(profiles.values());
+    }
+
+    public Profile getProfile(String profileName){
+        return profiles.get(profileName);
+    }
+
+    public Profile addProfile(Profile profile){
+        profile.setId(profiles.size() + 1);
+        profiles.put(profile.getProfileName(), profile);
+        return profile;
+    }
+
+    public Profile updateProfile(Profile profile){
+        if (profile.getProfileName().isEmpty()) {
+            return null;
+        }
+        profiles.put(profile.getProfileName(), profile);
+        return profile;
+    }
+
+    public Profile removeProfile(String profileName){
+        return profiles.remove(profileName);
+    }
+
+}
